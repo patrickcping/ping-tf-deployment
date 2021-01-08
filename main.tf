@@ -10,6 +10,7 @@ resource "kubernetes_secret" "ping_devops" {
   data = {
     PING_IDENTITY_DEVOPS_KEY = var.devops_key
     PING_IDENTITY_DEVOPS_USER = var.devops_user
+    PING_IDENTITY_ACCEPT_EULA = var.ping_accept_eula
   }
 
   type = "Opaque"

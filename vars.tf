@@ -2,6 +2,11 @@ variable "prefix" {
 
 }
 
+variable "ping_accept_eula" {
+    description = "EULA Accepted"
+    default = "NO"
+}
+
 variable "devops_user" {
   description = "The Ping Devops user ID."
 }
