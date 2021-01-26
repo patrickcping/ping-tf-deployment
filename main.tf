@@ -35,7 +35,7 @@ resource "kubernetes_secret" "ping_tls" {
 
 resource "helm_release" "ping_devops" {
 
-  name             = var.prefix
+  name             = "${var.prefix}-${var.ping_helm_name}"
   repository       = var.ping_helm_repo
   chart            = var.ping_helm_chart
   version          = var.ping_helm_chart_version
