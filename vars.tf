@@ -2,6 +2,10 @@ variable "prefix" {
 
 }
 
+variable "domain_suffix" {
+    description = "A domain suffix used for all resources."
+}
+
 variable "ping_accept_eula" {
     description = "EULA Accepted"
     default = "NO"
@@ -54,9 +58,60 @@ variable "ping_helm_chart" {
 
 variable "ping_helm_chart_version" {
     description = "The Ping Helm chart version"
-    default     = "0.4.0"
+    default     = "0.4.2"
 }
 
 variable "ping_helm_values_file" {
     description = "The Ping Helm chart values file"
+}
+
+## PF
+variable "pf_enabled" {
+    default = false
+}
+
+variable "pf_tag" {
+    default = "2101"
+}
+
+variable "pf_config_repo" {
+    default = "https://github.com/pingidentity/pingidentity-server-profiles.git"
+}
+
+variable "pf_config_path" {
+    default = "getting-started/pingfederate"
+}
+
+## PA
+variable "pa_enabled" {
+    default = false
+}
+
+variable "pa_tag" {
+    default = "2101"
+}
+
+variable "pa_config_repo" {
+    default = "https://github.com/pingidentity/pingidentity-server-profiles.git"
+}
+
+variable "pa_config_path" {
+    default = "getting-started/pingaccess"
+}
+
+## PD
+variable "pd_enabled" {
+    default = false
+}
+
+variable "pd_tag" {
+    default = "2101"
+}
+
+variable "pd_config_repo" {
+    default = "https://github.com/pingidentity/pingidentity-server-profiles.git"
+}
+
+variable "pd_config_path" {
+    default = "getting-started/pingdirectory"
 }
