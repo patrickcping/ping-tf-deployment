@@ -17,7 +17,8 @@ resource "kubernetes_secret" "ping_devops" {
 }
 
 resource "tls_private_key" "ping_devops" {
-  algorithm = "ECDSA"
+  algorithm = "RSA"
+  rsa_bits  = "4096"
 }
 
 resource "tls_self_signed_cert" "ping_devops" {
