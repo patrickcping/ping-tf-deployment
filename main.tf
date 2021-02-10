@@ -66,6 +66,28 @@ resource "kubernetes_secret" "ping_tls" {
   type = "kubernetes.io/tls"
 }
 
+resource "kubernetes_config_map" "ping_devops" {
+  metadata {
+    name = "${var.prefix}-${var.ping_helm_name}-global"
+    namespace = var.devops_k8s_namespace
+    labels = {
+      "managed-by" = "Terraform"
+    }
+  }
+
+  data = {
+    PF_ADMIN_INTERNAL_HOSTNAME  = "${var.prefix}-${var.ping_helm_name}-pingfederate-admin"
+    PF_ADMIN_INTERNAL_PORT      = "9999"
+    PF_ADMIN_EXTERNAL_HOSTNAME  = "pingfederate-admin.${var.prefix}.${var.domain_suffix}"
+    PF_ENGINE_EXTERNAL_HOSTNAME = "pingfederate-engine.${var.prefix}.${var.domain_suffix}"
+    PF_ENGINE_EXTERNAL_PORT     = "443"
+    PA_ENGINE_EXTERNAL_HOSTNAME = "pingaccess-engine.${var.prefix}.${var.domain_suffix}"
+    PA_ENGINE_EXTERNAL_PORT     = "443"
+    PA_ADMIN_INTERNAL_HOSTNAME  = "${var.prefix}-${var.ping_helm_name}-pingaccess-admin"
+    PA_ADMIN_EXTERNAL_HOSTNAME  = "pingaccess-admin.${var.prefix}.${var.domain_suffix}"
+  }
+}
+
 resource "helm_release" "ping_devops" {
 
   name             = "${var.prefix}-${var.ping_helm_name}"
@@ -108,6 +130,11 @@ resource "helm_release" "ping_devops" {
   set {
     name  = "global.license.secret.devOps"
     value = kubernetes_secret.ping_devops.metadata[0].name
+  }
+
+  set {
+    name  = "global.container.envFrom[0].configMapRef.name"
+    value = kubernetes_config_map.ping_devops.metadata[0].name
   }
 
   ## PF
